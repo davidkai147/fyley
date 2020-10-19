@@ -17,10 +17,34 @@ export default class Users extends BaseModel {
   public password: string
 
   @column()
+  public firstName: string
+
+  @column()
+  public lastName: string
+
+  @column.date()
+  public dob: DateTime
+
+  @column()
+  public phoneNumber: string
+
+  @column()
+  public gender: number
+
+  @column()
+  public status: string
+
+  @column()
   public rememberMeToken?: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
+
+  @column.dateTime()
+  public verifiedAt: DateTime
+
+  @column.dateTime()
+  public deletedAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
