@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import LoginValidator from 'App/Validators/Auth/LoginValidator'
-import ResponseApi from 'App/Helpers/ResponseApi'
+import ApiResponseBodyBuilder from 'App/Helpers/ApiResponseBodyBuilder'
 
 export default class AuthController {
   public async login ({ request, auth, response }: HttpContextContract) {
@@ -9,10 +9,9 @@ export default class AuthController {
 
     try {
       const token = await auth.use('api').attempt(data.email, data.password)
-      return token.toJSON()
+      return response.ok(ApiResponseBodyBuilder.success('ok', 200, token.toJSON()))
     } catch (error) {
-      response.unauthorized()
-      return ResponseApi.error('asdasdasd', 422)
+      return response.unauthorized(ApiResponseBodyBuilder.error('message', 401))
     }
   }
 }
