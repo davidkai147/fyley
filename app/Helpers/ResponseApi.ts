@@ -3,8 +3,11 @@
  * @author  Kai David
  * @since   2020
  */
-declare module 'ResponseApi' {
-  export function success (message: string, statusCode: number, results?: any) {
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+
+export class ResponseApi {
+  public success ({ response }: HttpContextContract, message: string, statusCode: number, results?: any): any {
+    response.unauthorized()
     return {
       message,
       error: false,
@@ -12,7 +15,7 @@ declare module 'ResponseApi' {
       results,
     }
   }
-  export function error (message: string, statusCode: number) {
+  public error (message: string, statusCode: number): any {
     // List of common HTTP request code
     let codes: number[]
     codes = [200, 201, 400, 401, 404, 403, 422, 500]
@@ -30,6 +33,8 @@ declare module 'ResponseApi' {
     }
   }
 }
+
+export default new ResponseApi()
 
 /**
  * @desc    Send any validation response
